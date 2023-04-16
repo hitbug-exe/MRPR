@@ -12,5 +12,5 @@ To run the code, simply copy and paste it into a Haskell file and run it using G
 # References
 https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/mapreduce-osdi04.pdf
 https://blogs.cornell.edu/info2040/2019/10/28/using-mapreduce-to-compute-pagerank
-https://medium.com/swlh/pagerank-on-mapreduce-55bcb76d1c99
+
 
