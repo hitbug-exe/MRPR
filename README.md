@@ -9,7 +9,7 @@ The main function defines the graph edges and the initial page rank values for e
 
 To run the code, simply copy and paste it into a Haskell file and run it using GHCi or another Haskell interpreter. The final page rank values for all nodes will be printed to the console.
 
-#References
+# References
 https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/mapreduce-osdi04.pdf
 https://blogs.cornell.edu/info2040/2019/10/28/using-mapreduce-to-compute-pagerank/
 https://medium.com/swlh/pagerank-on-mapreduce-55bcb76d1c99
