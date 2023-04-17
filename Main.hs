@@ -1,4 +1,5 @@
 import Data.Map (Map, lookup, fromList, empty, insertWith, mapWithKey, filterWithKey, toList, insert)
+import Data.List (sortBy)
 
 -- | Maps a function over each key-value pair in a Map, then concatenates the resulting lists.
 mapF :: Ord k2 => (k1 -> v1 -> [(k2, v2)]) -> Map k1 v1 -> [(k2, v2)]
@@ -37,6 +38,11 @@ pageRankReduce node pageRanks
   | null pageRanks = Nothing
   | otherwise = Just $ sum pageRanks
 
+-- Define a custom comparison function
+compareSecond :: (a, Maybe Double) -> (b, Maybe Double) -> Ordering
+compareSecond (_, Just x) (_, Just y) = compare y x
+compareSecond _ _ = error "Cannot compare tuples with missing values"
+
 main = do
   -- Define the graph edges.
   let edges = [(1, [2, 3]), (2, [3]), (3, [1, 4]), (4, [2])]
@@ -51,11 +57,17 @@ main = do
   let pageRank = mapReduce pageRankMap pageRankReduce
 
   -- | Takes a list of edges and the number of steps to compute the page rank, and returns the final page rank values after the given number of steps.
-  let pageRanksAfterSteps edges steps = iterate (toPageRankGraph edges . pageRank) (toPageRankGraph edges   initialPageRanks) !! steps
+  let pageRanksAfterSteps edges steps = iterate (toPageRankGraph edges . pageRank) (toPageRankGraph edges initialPageRanks) !! steps
 
   -- Calls the pageRanksAfterSteps function with steps=10 and edges=edges.
   let finalPageRanks = pageRanksAfterSteps edges 10
 
+  -- Sort the list in descending order based on the second value
+  let sortedList = sortBy compareSecond $ toList finalPageRanks
+
+  -- Extract the first element of each tuple (i.e., the node IDs)
+  let maxPagerankNodes = map fst sortedList
+  
   -- Prints the finalPageRanks for all the nodes.
-  mapM_ print (toList finalPageRanks)
+  mapM_ print maxPagerankNodes
 
